@@ -7,11 +7,13 @@ import sys
 parser = optparse.OptionParser()
 parser.add_option("-p", dest="port", default="8080")
 parser.add_option("-f", dest="filename", default="file://./storage")
+parser.add_option("-u", dest="url")
 (options, args) = parser.parse_args()
 
 file_store = options.filename
 print "loading storage %s" % file_store
 storage = shove.Shove(file_store)
+url = options.url
 
 try:
     storage['num_urls']
@@ -38,7 +40,7 @@ class Redirector(resource.Resource):
         destination = "http://%s" % request.args['url'][0]
         storage[key] = destination
         print "%s <- %s" % (key, destination)
-        return "http://127.0.0.1:8080/%s" % key
+        return "%s/%s" % (url, key)
 
 reactor.listenTCP(int(options.port), server.Site(Redirector()))
 reactor.run()
