@@ -4,7 +4,7 @@ INSTALL
 =======
 
     pip install twisted shove
-    python server.py -f "file://`pwd`/storage" -p 8080
+    python server.py
     
 And you're off, listening on port 8080! If you really want to get crazy, you can add some arguments. 
 
